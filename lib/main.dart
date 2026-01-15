@@ -1,32 +1,48 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var a = 1;
+  var name = ['가가', '나나', '다다'];
+  var like = [0, 0, 0];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Text(a.toString()),
+          onPressed: () {
+            setState(() {
+              a++;
+            });
+          },
+        ),
         appBar: AppBar(),
-        body: ListView(
-          children: [
-            Row(
-              children: [
-                Icon(Icons.account_circle, size: 50,),
-                Text('안녕')
-              ],
-            ),
-            Row(
-              children: [
-                Icon(Icons.account_circle, size: 50,),
-                Text('안녕')
-              ],
-            ),
-          ],
+        body: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (context, i) {
+            return ListTile(
+              // leading: Image.asset('shoes.jpg'),
+              leading: Text(like[i].toString()),
+              title: Text(name[i]),
+              trailing: TextButton(onPressed: () {
+                setState(() {
+                  like[i]++;
+                });
+              }, child: Text('좋아요!')),
+            );
+          },
         ),
         bottomNavigationBar: BottomAppBar(
           child: BottomNavigationItems(),
