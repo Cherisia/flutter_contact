@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-      home: MyApp()
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -14,16 +12,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var a = 1;
+  var name = ['가가', '나나', '다다'];
+  var like = [0, 0, 0];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      home: Scaffold(
         floatingActionButton: FloatingActionButton(
+          child: Text(a.toString()),
           onPressed: () {
-            print(context.findAncestorWidgetOfExactType<MaterialApp>());
-            // Material App이 있는 context를 파라미터로 넣어야만함.
-            showDialog(context: context, builder: (context) {
-              return Dialog(child: Text('안녕'));
+            setState(() {
+              a++;
             });
           },
         ),
@@ -32,14 +33,22 @@ class _MyAppState extends State<MyApp> {
           itemCount: 3,
           itemBuilder: (context, main4) {
             return ListTile(
-              leading: Image.asset('shoes.jpg'),
+              // leading: Image.asset('shoes.jpg'),
+              leading: Text(like[main4].toString()),
+              title: Text(name[main4]),
+              trailing: TextButton(onPressed: () {
+                setState(() {
+                  like[main4]++;
+                });
+              }, child: Text('좋아요!')),
             );
           },
         ),
         bottomNavigationBar: BottomAppBar(
           child: BottomNavigationItems(),
         ),
-      );
+      ),
+    );
   }
 }
 
